@@ -41,3 +41,18 @@ Activate Deploy Previews. Now start a new branch, make change and push. In GitHu
 GitHub UI will now show the deployment to Netlify in progress. 
 Move back to Netlify's deploy tab and click the link for 'Deploy Preview #1'. This will open a browser with a link to the new deployment. 
 
+### Functions
+
+Add a folder named `netlify/functions`.
+Add a file named `hallo.js` and copy the code below
+
+```
+exports.handler = async function(event, context) {
+    return {
+        statusCode: 200,
+        body: JSON.stringify({message: "Hello World"})
+    };
+}
+```
+
+Access the hallo function at `/.netlify/functions/hallo`
