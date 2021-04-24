@@ -1,0 +1,30 @@
+{
+  "name": "netlify-test",
+  "version": "1.0.0",
+  "main": "index.html",
+  "repository": "git@github.com:jvermeir/netlify.git",
+  "author": "Jan Vermeir <jvermeir@hotmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "netlify-lambda build src",
+    "ts-check": "tsc --noEmit --lib ES2015 ./src/*.ts",
+    "develop": "netlify-lambda serve src"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "dependencies": {
+    "encoding": "^0.1.13",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/aws-lambda": "^8.10.59",
+    "netlify-lambda": "^2.0.1",
+    "prettier": "^2.0.5",
+    "typescript": "^3.9.7"
+  }
+}
