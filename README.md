@@ -73,13 +73,14 @@ More details can be found in the docs:
 
 ### Deploy Previews
 
+Netlify can deploy a new version when a pull request is started on GitHub. To activate go to `settings > build and deploy > deploy contexts` and
+activate `Deploy Previews`.
+![Deploy Preview](https://github.com/jvermeir/netlify/images/DeployPreview.png "Deploy Previews")
 
-Netlify can deploy a new version when a pull request is started on GitHub. To activate go to settings/build and deploy/deploy contexts.
-Activate Deploy Previews. Now start a new branch, make change and push. In GitHub, start a pull request.
-GitHub UI will now show the deployment to Netlify in progress.
-Move back to Netlify's deploy tab and click the link for 'Deploy Preview #1'. This will open a browser with a link to the new deployment.
-
-
+Now start a new branch, make a change and push. On GitHub, start a pull request. The GitHub UI will now show the deployment to Netlify in progress.
+![Merge check](https://github.com/jvermeir/netlify/images/MergeCheck.png "GitHub triggers build and deploy"). 
+You can access the deployment from GitHub by clicking the `Details` link in the last line shown in the image above. Or by moving back to Netlify's deploy tab and clicking the link for 'Deploy Preview #1'. This will open a browser with new deployment.
+The same details are available on the site overview page.
 
 ### Set up A/B testing 
 
