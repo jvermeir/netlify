@@ -81,6 +81,9 @@ Now start a new branch, make a change and push. On GitHub, start a pull request.
 ![Merge check](https://github.com/jvermeir/netlify/images/MergeCheck.png "GitHub triggers build and deploy"). 
 You can access the deployment from GitHub by clicking the `Details` link in the last line shown in the image above. Or by moving back to Netlify's deploy tab and clicking the link for 'Deploy Preview #1'. This will open a browser with new deployment.
 The same details are available on the site overview page.
+As long as the pull request is open, new commits will trigger a new deploy to the same url. I've added a file named `branch1.html`. This is accessible on this url `https://deploy-preview-2--jan-vermeir.netlify.app/branch1.html`. 
+Every commit to the branch triggers a new deploy and the url will remain the same. ![Deploy Preview overview](https://github.com/jvermeir/netlify/images/DeployPreviewOverview.png "Deploy Preview Overview")
+Older deployments remain available: clicking one of the `Deploy preview #2` links on the site overview page will show the build for that particular commit and provides a link to the deployment. 
 
 ### Set up A/B testing 
 
