@@ -32,7 +32,7 @@ In summary:
 ### Automated deployment
 
 With the configuration above in place, we can now enable automated deployment for each commit to the main branch. The third tab of the `New site from Git` allows selecting a branch to deploy and the configuration of the build and deploy itself.
-In my case there's no more than and index.html file in the public folder, so I just accepted all defaults. 
+In my case there's no more than and index.html file in the public folder, so I set the `Base directory` property to `public`. 
 
 ### Branch Deploys
 
