@@ -5,7 +5,7 @@
 The purpose of this exercise is to show how Netlify can be used to support a development process. 
 We would like to achieve the following goals:
 
-1. Find out if a new commit can be successfully deployed.
+1. Find out if a new commit can be deployed automatically.
 1. Support testing by a group of people on a stable version of the site. 
 1. Try out a version of the site in production to find out if version A or version B works better. 
 
@@ -32,11 +32,33 @@ In summary:
 ### Automated deployment
 
 With the configuration above in place, we can now enable automated deployment for each commit to the main branch. The third tab of the `New site from Git` allows selecting a branch to deploy and the configuration of the build and deploy itself.
-In my case there's no more than and index.html file in the public folder, so I set the `Base directory` property to `public`. 
+In my case there's no more than an index.html file that used to be in the root of the repository. Publishing that would mean that all content of the repository is accessible. That seemed like a bad idea, so
+I moved the index.html file to a folder named `public` and set the `Publish directory` property to `public`.
+![Settings for deployment](https://github.com/jvermeir/netlify/images/DeploySettings.png "Settings for deployment").
+
+So now the basics are in place, we can move on to automated deployment for every commit to a specific branch.
 
 ### Branch Deploys
 
-Branch deploys are useful for 
+By default Netlify will only deploy changes made to the main branch. It's easy to add other branches, though. 
+Branch deploys are useful to share changes with others before making them public. One usecase would be to deploy to a staging environment to allow others to test changes. 
+Suppose our workflow looks like this:
+- create some feature branches of main to implement a number of changes.  
+- merge feature branches into a release branch.
+- deploy the release branch so all changes can be tested as a whole.
+
+To configure which branches will be deploy, go to `Site settings > Build & deploy > Continuous Deployment`. There you'll find the `deploy contexts` settings. Add `staging` in the input field for `additional branches`. 
+To test this, I've created a branch named `staging` and pushed a change like this:
+
+```
+git checkout -b staging
+echo "I'm on staging" > public/staging.html
+git add .
+git commit -m "deploy to staging"
+git push 
+```
+
+https://docs.netlify.com/site-deploys/overview/#branches-and-deploys
 go to settings/build&deploy/Deploy contexts
 
 https://app.netlify.com/sites/<your site here>/settings/deploys#continuous-deployment
