@@ -12,7 +12,8 @@ We would like to achieve the following goals:
 ### Getting Started 
 
 Below I'll assume you've created an account on Netlify. You can do that using their free plan. For lack of inspiration, I named my team after myself.
-![Netlify team](https://github.com/jvermeir/netlify/images/TeamSetup.png "Team Setup").
+![Netlify team](https://github.com/jvermeir/netlify/images/TeamSetup.png "Team Setup"). I've set the site name to `jan-vermeir` so Netlify will deploy to this url: 
+(https://jan-vermeir.netlify.app/ "https://jan-vermeir.netlify.app/").
 
 ### Set up a site to deploy from Github.
 
@@ -40,7 +41,7 @@ So now the basics are in place, we can move on to automated deployment for every
 
 ### Branch Deploys
 
-By default Netlify will only deploy changes made to the main branch. It's easy to add other branches, though. 
+By default, Netlify will only deploy changes made to the main branch. It's easy to add other branches, though. 
 Branch deploys are useful to share changes with others before making them public. One usecase would be to deploy to a staging environment to allow others to test changes. 
 Suppose our workflow looks like this:
 - create some feature branches of main to implement a number of changes.  
@@ -55,15 +56,30 @@ git checkout -b staging
 echo "I'm on staging" > public/staging.html
 git add .
 git commit -m "deploy to staging"
-git push 
+git push --set-upstream origin staging
 ```
 
-https://docs.netlify.com/site-deploys/overview/#branches-and-deploys
-go to settings/build&deploy/Deploy contexts
+Now the `deploys` tab should show an extra deployment for staging. Note that this may take a while to show up in the list. 
+The url for this deployment is computed from the base name for the site, in combination with the name of the branch: 
 
-https://app.netlify.com/sites/<your site here>/settings/deploys#continuous-deployment
+```
+https://staging--jan-vermeir.netlify.app/staging.html
+```
 
-select branches to be deployed. 
+So `staging--jan-vermeir` in this case because my domain is `jan-vermeir` and the branch is `staging`.
+
+More details can be found in the docs:
+![Branch deploys](https://docs.netlify.com/site-deploys/overview/#branches-and-deploys "branch deploys")
+
+### Deploy Previews
+
+
+Netlify can deploy a new version when a pull request is started on GitHub. To activate go to settings/build and deploy/deploy contexts.
+Activate Deploy Previews. Now start a new branch, make change and push. In GitHub, start a pull request.
+GitHub UI will now show the deployment to Netlify in progress.
+Move back to Netlify's deploy tab and click the link for 'Deploy Preview #1'. This will open a browser with a link to the new deployment.
+
+
 
 ### Set up A/B testing 
 
@@ -82,13 +98,6 @@ Add branchB on the split testing page and drag the slider to 33%.
 
 Run `./test.sh`. The script curls to https://sad-sammet-2a9b52.netlify.app/ every couple seconds and show it returns one of the three versions. 
 Super easy. 
-
-### Set up Deploy Previews
-
-Netlify can deploy a new version when a pull request is started on GitHub. To activate go to settings/build and deploy/deploy contexts.
-Activate Deploy Previews. Now start a new branch, make change and push. In GitHub, start a pull request.
-GitHub UI will now show the deployment to Netlify in progress. 
-Move back to Netlify's deploy tab and click the link for 'Deploy Preview #1'. This will open a browser with a link to the new deployment. 
 
 
 ## Other stuff 
