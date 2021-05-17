@@ -12,7 +12,8 @@ We would like to achieve the following goals:
 ### Getting Started 
 
 Below I'll assume you've created an account on Netlify. You can do that using their free plan. For lack of inspiration, I named my team after myself.
-![Netlify team](https://github.com/jvermeir/netlify/images/TeamSetup.png "Team Setup").
+![Netlify team](https://github.com/jvermeir/netlify/images/TeamSetup.png "Team Setup"). I've set the site name to `jan-vermeir` so Netlify will deploy to this url: 
+(https://jan-vermeir.netlify.app/ "https://jan-vermeir.netlify.app/").
 
 ### Set up a site to deploy from Github.
 
@@ -57,6 +58,9 @@ git add .
 git commit -m "deploy to staging"
 git push --set-upstream origin staging
 ```
+
+Now the `deploys` tab should show an extra deployment for staging. Note that this may take a while to show up in the list. 
+The url for this deployment can be found in the deployment overview. 
 
 https://docs.netlify.com/site-deploys/overview/#branches-and-deploys
 go to settings/build&deploy/Deploy contexts
