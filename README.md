@@ -55,7 +55,7 @@ git checkout -b staging
 echo "I'm on staging" > public/staging.html
 git add .
 git commit -m "deploy to staging"
-git push 
+git push --set-upstream origin staging
 ```
 
 https://docs.netlify.com/site-deploys/overview/#branches-and-deploys
