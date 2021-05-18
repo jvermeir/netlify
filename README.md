@@ -33,7 +33,7 @@ In summary:
 
 ### Automated deployment
 
-With the configuration above in place, we can now enable automated deployment for each commit to the main branch. The third tab of the `New site from Git` allows selecting a branch to deploy and the configuration of the build and deploy itself.
+With the configuration above in place, we can now enable automated deployment for each commit to the main branch. The third tab of the `New site from Git` dialog allows selecting a branch to deploy and the configuration of the build and deploy itself.
 In my case there's no more than an index.html file that used to be in the root of the repository. Publishing that would mean that all content of the repository is accessible. That seemed like a bad idea, so
 I moved the index.html file to a folder named `public` and set the `Publish directory` property to `public`.
 
@@ -50,7 +50,7 @@ Suppose our workflow looks like this:
 - merge feature branches into a release branch.
 - deploy the release branch so all changes can be tested as a whole.
 
-To configure which branches will be deploy, go to `Site settings > Build & deploy > Continuous Deployment`. There you'll find the `deploy contexts` settings. Add `staging` in the input field for `additional branches`. 
+To configure which branches will be deployed, go to `Site settings > Build & deploy > Continuous Deployment`. There you'll find the `deploy contexts` settings. Add `staging` in the input field for `additional branches`. 
 To test this, I've created a branch named `staging` and pushed a change like this:
 
 ```
@@ -82,9 +82,9 @@ activate `Deploy Previews`.
 
 Now start a new branch, make a change and push. On GitHub, start a pull request. The GitHub UI will now show the deployment to Netlify in progress.
 
-![Merge check](https://github.com/jvermeir/netlify/blob/main/images/MergeCheck.png "GitHub triggers build and deploy"). 
+![Merge check](https://github.com/jvermeir/netlify/blob/main/images/MergeCheck.png "GitHub triggers build and deploy")
 
-You can access the deployment from GitHub by clicking the `Details` link in the last line shown in the image above. Or by moving back to Netlify's deploy tab and clicking the link for 'Deploy Preview #1'. This will open a browser with new deployment.
+You can access the deployment from GitHub by clicking the `Details` link in the last line shown in the image above. Or by moving back to Netlify's deploy tab and clicking the link for 'Deploy Preview #2'. This will open a browser with new deployment.
 The same details are available on the site overview page.
 As long as the pull request is open, new commits will trigger a new deploy to the same url. I've added a file named `branch1.html`. This is accessible on this url `https://deploy-preview-2--jan-vermeir.netlify.app/branch1.html`. 
 Every commit to the branch triggers a new deploy and the url will remain the same. 
