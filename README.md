@@ -98,21 +98,57 @@ Older deployments remain available: clicking one of the `Deploy preview #2` link
 
 ### Set up A/B testing 
 
-Called 'Split Testing' by Netlify.
-Active branch deploys first.
-Create a branch named branchA. Update index.html to show we're on A. Branch gets deployed next to main branch deployment.
+A/B testing is called 'Split Testing' by Netlify. It is accessible via the main menu. I spent quite some time looking for this option, I'm afraid, so here's a screenshot.
 
-Access branch site on https://brancha--sad-sammet-2a9b52.netlify.app/
-Access main branch on https://main--sad-sammet-2a9b52.netlify.app/
-Access site on https://sad-sammet-2a9b52.netlify.app/
+![Split testing link](https://github.com/jvermeir/netlify/blob/main/images/SplitTestingLink.png "Split testing link")
 
-so curl https://sad-sammet-2a9b52.netlify.app/ will now alternate between main and branchA 
+To start using this feature, we first need to create a bunch of branches. So I've added three branches to my repository, `branchA`, `branchB` and `branchC` and added a line to the index.html page, so the branches are easy to identify. 
+These branches aren't automatically deployed by Netlify. By default, it will only deploy main (or master). To change that, open `deploy settings` and add the branches you need in the test 
+under `branch deploys` in the `additional branches` input box. Note that you can add branches that aren't even there yet. Also make sure each branch appears in its own little box with an 'x' next to it. Netlify doesn't 
+check these branch names, you'll just not see what you expected when selecting a branch for the split test. 
 
-Create a branch named branchB. Update index.html to show we're on B.
-Add branchB on the split testing page and drag the slider to 33%. 
+![Split testing configuration](https://github.com/jvermeir/netlify/blob/main/images/splitTestingConfiguration.png "Split testing configuration")
 
-Run `./test.sh`. The script curls to https://sad-sammet-2a9b52.netlify.app/ every couple seconds and show it returns one of the three versions. 
-Super easy. 
+In each branch I've added an identifier in pages/index.html, so it looks like this:
+
+```
+<body>hello world. This is branch B. v3</body>
+```
+
+With these branches in place we can start a test. In the `split testing` tab I configured three extra branches, so it looks like this:
+
+![Split testing setup](https://github.com/jvermeir/netlify/blob/main/images/splitTestingSetup.png "Split testing setup")
+
+and click the `Start test` button. 
+
+To validate the config works, I've added a script named `./spilt-testing.sh`. The script curls to https://jan-vermeir.netlify.app/ every couple seconds and show it returns one of the four versions that are now available.
+The output of the script will look like this:
+
+```
+<body>hello world. This is branch C. v2</body>
+<body>hello world. This is branch B. v3</body>
+<body>hello world. This is branch C. v2</body>
+<body>hello world. This is branch A. v3</body>
+<body>hello world</body>
+<body>hello world. This is branch A. v3</body>
+<body>hello world. This is branch B. v3</body>
+<body>hello world</body>
+```
+
+Super easy.
+You can even change this test on the fly, by adding or removing branches on the split testing configuration page. Or you can stop the test at any time and resume it later. 
+
+Using curl from the command line like above, will start a new session with every request. Netlify sets a cookie named `nf_ab` that identifies the client, so if the cookie is passed 
+with a new request, the same version of the site will be used:
+
+```
+$ curl -c ./cookies.txt https://jan-vermeir.netlify.app/
+<body>hello world. This is branch B. v3</body>
+$ curl -b ./cookies.txt https://jan-vermeir.netlify.app/
+<body>hello world. This is branch B. v3</body>
+$ curl -b ./cookies.txt https://jan-vermeir.netlify.app/
+<body>hello world. This is branch B. v3</body>
+```
 
 
 ## Other stuff 
