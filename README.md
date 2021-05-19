@@ -94,13 +94,11 @@ Every commit to the branch triggers a new deploy and the url will remain the sam
 Older deployments remain available: clicking one of the `Deploy preview #2` links on the site overview page will show the build for that particular commit and provides a link to the deployment. 
 
 
-# TODO
-
 ### Set up A/B testing 
 
 A/B testing is called 'Split Testing' by Netlify. It is accessible via the main menu. I spent quite some time looking for this option, I'm afraid, so here's a screenshot.
 
-![Split testing link](https://github.com/jvermeir/netlify/blob/main/images/SplitTestingLink.png "Split testing link")
+![Split testing link](https://github.com/jvermeir/netlify/blob/main/images/splitTestingLink.png "Split testing link")
 
 To start using this feature, we first need to create a bunch of branches. So I've added three branches to my repository, `branchA`, `branchB` and `branchC` and added a line to the index.html page, so the branches are easy to identify. 
 These branches aren't automatically deployed by Netlify. By default, it will only deploy main (or master). To change that, open `deploy settings` and add the branches you need in the test 
@@ -150,6 +148,8 @@ $ curl -b ./cookies.txt https://jan-vermeir.netlify.app/
 <body>hello world. This is branch B. v3</body>
 ```
 
+
+# TODO
 
 ## Other stuff 
 
