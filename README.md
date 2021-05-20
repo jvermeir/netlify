@@ -154,6 +154,14 @@ Over the past years I've tried working with lambda functions on and off a couple
 Netlify changes all that by making lambda's easy to use. Below I'll describe the basics of deploying a function, and I'll show how the development tools support local development. 
 
 
+fix this...
+
+use Netlify cli:
+- download 
+netlify login
+netlify link (image: netlifyLink.png)
+netlify build   
+
 
 # TODO
 
