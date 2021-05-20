@@ -148,6 +148,12 @@ $ curl -b ./cookies.txt https://jan-vermeir.netlify.app/
 <body>hello world. This is branch B. v3</body>
 ```
 
+### Using Functions
+
+Over the past years I've tried working with lambda functions on and off a couple of times. Each time I got stuck, either clicking in AWS UIs or writing YAML files. 
+Netlify changes all that by making lambda's easy to use. Below I'll describe the basics of deploying a function, and I'll show how the development tools support local development. 
+
+
 
 # TODO
 
