@@ -243,18 +243,103 @@ $ curl https://jan-vermeir.netlify.app/.netlify/functions/hallo
 
 At least simple things are simple, if you don't overlook obvious things like buttons named 'functions'. I guess the web console and me aren't going to be friends any time soon. 
 
+### Netlify CLI 
+
+The Netlify CLI tool can be used to support local development but also in scripting on a build server. I'll show how to install and setup the tool and how to use it in scripts. 
+
+#### Basics 
+
+```
+npm install netlify-cli -g
+```
+```
+netlify login
+```
+This opens a web page where you use your credentials to log in. The result is a file in your home folder, in my case 
+
+```
+~/Library/Preferences/netlify/config.json
+```
+
+This file contains user data and a token. Next we have to `link` a site, i.e. the site all future commands will be executed on:
+
+```
+ $ netlify link
+
+netlify link will connect this folder to a site on Netlify
+
+? How do you want to link this folder to a site? (Use arrow keys)
+❯ Use current git remote origin (https://github.com/jvermeir/netlify)
+  Search by full or partial site name
+  Choose from a list of your recently updated sites
+  Enter a site ID
+```
+
+I choose the default option, linking the CLI to my test site based on my test repository.
+
+The site can be build with `netlify build`, which will result in a zip file stored in the base folder of the site:
+
+![Build Folder](https://github.com/jvermeir/netlify/blob/main/images/buildFolder.png "Build Folder")
+
+In this simple case, the build command doesn't add too much value, but if the build becomes more complex it could be useful.
+
+Using the `deploy` option, a local build of the site can be deployed to Netlify. This allows external build tools to be used, where a version is build and packaged and then has to be deployed from the package. One example could be pulling a version from an artifact repository like 
+![Artifactory](https://jfrog.com/artifactory/ "Artifactory"). Or if you're stuck with a build server like BitBucket or Jenkins.
+
+This is the log of a deployment:
+```
+ $ netlify deploy
+Deploy path:        /Users/jan/dev/netlify/src/site
+Functions path:     /Users/jan/dev/netlify/src/functions
+Configuration path: /Users/jan/dev/netlify/netlify.toml
+Deploying to draft URL...
+✔ Finished hashing 2 files and 1 functions
+✔ CDN requesting 0 files and 1 functions
+✔ Finished uploading 1 assets
+✔ Deploy is live!
+
+Logs:              https://app.netlify.com/sites/jan-vermeir/deploys/60a772523afb8f96284dcd78
+Website Draft URL: https://60a772523afb8f96284dcd78--jan-vermeir.netlify.app
+
+If everything looks good on your draft URL, deploy it to your main site URL with the --prod flag.
+netlify deploy --prod
+```
+
+Note that a temporary URL is created for the deployment (https://60a772523afb8f96284dcd78--jan-vermeir.netlify.app in this case). As the log says, use 
+
+```
+netlify deploy --prod
+```
+
+to push this version to production. 
+
+#### Using the dev tool 
+
+One interesting option of the CLI is the `dev` tool (see https://github.com/netlify/cli/blob/main/docs/netlify-dev.md). This tool allows local deployment of a site, so it can be easily tested. 
+The killer feature of this tool in my opinion is that it allows debugging. To test that out I've started the dev tool using VSCode: 
+
+![Debugger in VSCode](https://github.com/jvermeir/netlify/blob/main/images/debugger.png "Debugger in VSCode")
+
+The window at the top shows the hallo function with a breakpoint set on the line that logs to the console. I've started netlify dev in the terminal at the bottom of the window. 
+This shows the functions server is listening on 64777. This is a random port that changes with each run. 
+
+```
+◈ No app server detected and no "command" specified
+◈ Running static server from "src/site"
+◈ Functions server is listening on 64777
+
+◈ Server listening to 3999
+```
+
+Now we can access the hallo function on the command line:
+
+```
+$ curl localhost:64777/.netlify/functions/hallo
+```
+
+Now the function will stop in the debugger at our breakpoint. 
 
 # TODO
 
 * gatsby site 
 * deploy previews 
-* use Netlify cli:
-- local development
-- download 
-netlify login
-netlify link (image: netlifyLink.png)
-netlify build   
-
-### cli 
-
-https://docs.netlify.com/cli/get-started/#netlify-dev

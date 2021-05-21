@@ -4,3 +4,6 @@ tmp
 
 # Local Netlify folder
 .netlify
+
+.history
+.vscode
