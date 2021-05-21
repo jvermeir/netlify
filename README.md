@@ -152,41 +152,109 @@ $ curl -b ./cookies.txt https://jan-vermeir.netlify.app/
 
 Over the past years I've tried working with lambda functions on and off a couple of times. Each time I got stuck, either clicking in AWS UIs or writing YAML files. 
 Netlify changes all that by making lambda's easy to use. Below I'll describe the basics of deploying a function, and I'll show how the development tools support local development. 
+The most basic hello world example I could come up with can be found in this repo, tagged 'basic-javascript-lambda'. There's a simple index.html file (a left over from earlier experiments), 
+and a hallo.js file in src/functions. That almost works, but it needs one specific bit of configuration in a file named netlify.toml, located in the root of the repository. 
+
+The Javascript file looks like this, returning a 200 OK response and a JSON formatted message:
+```
+exports.handler = async function(event, context) {
+    return {
+        statusCode: 200,
+        body: JSON.stringify({message: "Hello World - v2"})
+    };
+}
+```
+
+The netlify.toml file looks like this:
+
+```
+[build]
+    base = "src"
+    publish = "site"
+[functions]
+    directory = "functions"
+```
+
+So it sets the `base` folder for all code. Because there's no fancy preprocessing going on (I'm using a plain html file that can be served as a static resource), the value of `publish` is set 
+to the folder that contains the single html file. Given this configuration, html files should be in a folder named `src/site` in the root of the repository.
+The root folder for functions is `functions`. This folder is also a subfolder for `src`, so function files for Javascript are stored in `src/functions` in the root of the repository.
+The toml file is described in https://docs.netlify.com/configure-builds/file-based-configuration/.
+All we need for a simple Javascript function that has no dependencies or build script is this:
+
+```
+.
+./netlify.toml
+./src
+./src/site
+./src/site/index.html
+./src/functions
+./src/functions/hallo.js
+```
+
+Note that if you start using netlify.toml, the Netlify console may show confusing information. Once the version above is deployed, the configuration is replaced with the contents of netlify.toml. It 
+is still possible to change paths using the web console, but changes made there are ignored. 
+
+After committing and pushing these changes, Netlify shows this in the deployment log:
+
+```
+3:39:12 PM: Build ready to start
+...
+3:39:39 PM: ────────────────────────────────────────────────────────────────
+3:39:39 PM:   Netlify Build                                                 
+3:39:39 PM: ────────────────────────────────────────────────────────────────
+...
+3:39:39 PM: ❯ Current directory
+3:39:39 PM:   /opt/build/repo/src
+3:39:39 PM: ❯ Config file
+3:39:39 PM:   /opt/build/repo/netlify.toml
+...
+3:39:39 PM: ────────────────────────────────────────────────────────────────
+3:39:39 PM:   1. Functions bundling                                         
+3:39:39 PM: ────────────────────────────────────────────────────────────────
+3:39:39 PM: Packaging Functions from functions directory:
+3:39:39 PM:  - hallo.js
+...
+3:39:39 PM: ────────────────────────────────────────────────────────────────
+3:39:39 PM:   2. Deploy site                                                
+3:39:39 PM: ────────────────────────────────────────────────────────────────
+...
+3:39:40 PM: (Deploy site completed in 176ms)
+...
+3:39:51 PM: Finished processing build request in 27.770218813s
+```
+
+Noticing the log line at 3:39:39 PM, I thought 'yes! works!' and hit `curl https://jan-vermeir.netlify.app/hallo`
+But that didn't work, unfortunately. The URL wasn't immediately clear to me, but luckily there's an easy way to find out in the web console under `functions` (who would have thought, oh well...).
+
+![Functions](https://github.com/jvermeir/netlify/blob/main/images/functions.png "Functions")
+
+This shows a list of deployed functions and how to call them:
+
+![Functions Details](https://github.com/jvermeir/netlify/blob/main/images/functionDetails.png "Functions Details")
+
+This shows the actual URL of the endpoint: 
+
+```
+$ curl https://jan-vermeir.netlify.app/.netlify/functions/hallo
+{"message":"Hello World - v2"}
+```
+
+#### Summary 
+
+At least simple things are simple, if you don't overlook obvious things like buttons named 'functions'. I guess the web console and me aren't going to be friends any time soon. 
 
 
-fix this...
+# TODO
 
-use Netlify cli:
+* gatsby site 
+* deploy previews 
+* use Netlify cli:
+- local development
 - download 
 netlify login
 netlify link (image: netlifyLink.png)
 netlify build   
 
-
-# TODO
-
-## Other stuff 
-
 ### cli 
 
 https://docs.netlify.com/cli/get-started/#netlify-dev
-
-### Functions
-
-https://docs.netlify.com/configure-builds/common-configurations/gatsby/
-https://atila.io/netlify-functions-typescript
-https://docs.netlify.com/functions/overview/
-
-Add a folder named `netlify/functions`.
-Add a file named `hallo.js` and copy the code below
-
-```
-exports.handler = async function(event, context) {
-    return {
-        statusCode: 200,
-        body: JSON.stringify({message: "Hello World"})
-    };
-}
-```
-
-Access the hallo function at `/.netlify/functions/hallo`
