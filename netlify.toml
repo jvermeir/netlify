@@ -2,4 +2,4 @@
     base = "src"
     publish = "site"
 [functions]
-    directory = "functions"
+    directory = "functionszzz"
