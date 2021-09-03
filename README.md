@@ -190,3 +190,4 @@ exports.handler = async function(event, context) {
 ```
 
 Access the hallo function at `/.netlify/functions/hallo`
+
