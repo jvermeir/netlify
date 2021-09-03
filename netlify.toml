@@ -1,0 +1,6 @@
+[build]
+    base = "/jans-gatsby-site/"
+[dev]
+    command = "gatsby develop"
+    framework = "gatsby"
+    publish = "jans-gatsby-site"

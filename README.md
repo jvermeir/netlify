@@ -339,7 +339,34 @@ $ curl localhost:64777/.netlify/functions/hallo
 
 Now the function will stop in the debugger at our breakpoint. 
 
+### Deploying Gatsby sites 
+
+Warning: the "publish" directory was not set and will default to the repository root directory.
+To publish the root directory, please set the "publish" directory to "/"
+To publish the "base" directory instead, please set the "publish" directory to "jans-gatsby-site"
+* gatsby site
+
+set build output:
+
+![Settings for deployment](https://github.com/jvermeir/netlify/blob/main/images/gatsbyDeploySettings.png "Settings for deployment")
+
+to avoid
+
+```
+10:23:47 PM: Starting to deploy site from ''
+10:23:49 PM: ​
+10:23:49 PM: ────────────────────────────────────────────────────────────────
+10:23:49 PM:   Configuration error                                           
+10:23:49 PM: ────────────────────────────────────────────────────────────────
+10:23:49 PM: ​
+10:23:49 PM:   Error message
+10:23:49 PM:   Deploy did not succeed: Invalid filename 'jans-gatsby-site/node_modules/es5-ext/array/#/compact.js'. Deployed filenames cannot contain # or ? characters
+10:23:49 PM: ​
+```
+
+node_modules is not part of the site to be deployed but part of the temporary build output. The products of the build that are meant to be deployed are actually in the `public` folder.
+
 # TODO
 
-* gatsby site 
+
 * deploy previews 
